@@ -17,18 +17,65 @@ namespace ConsoleUI
 
             //BrandTest();
 
+            //UserTest();
+
+            //CustomerTest();
+
+            //RentalTest();
+
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetail())
+            var result = carManager.GetCarDetail();
+            foreach (var car in result.Data)
             {
-                Console.WriteLine(car.CarName + " " + car.BrandName + " " + car.ColorName + " " + car.DailyPrice );
+                Console.WriteLine(car.CarName + " " + car.BrandName + " " + car.ColorName + " " + car.DailyPrice);
             }
 
+        }
+
+        private static void RentalTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.GetAll();
+            foreach (var rental in result.Data)
+            {
+                Console.WriteLine(rental.RentDate);
+            }
+            rentalManager.Add(new Rental { Id = 1, CarId = 1, CustomerId = 1, RentDate = DateTime.Now, ReturnDate = null });
+            rentalManager.Update(new Rental { Id = 1, CarId = 1, CustomerId = 1, RentDate = DateTime.Now, ReturnDate = null });
+            rentalManager.Delete(new Rental { Id = 1 });
+        }
+
+        private static void CustomerTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            var result = customerManager.GetAll();
+            foreach (var customer in result.Data)
+            {
+                Console.WriteLine(customer.CompanyName);
+            }
+            customerManager.Add(new Customer { CustomerId = 4, UserId = 1, CompanyName = "şirket1" });
+            customerManager.Update(new Customer { CustomerId = 4, UserId = 1, CompanyName = "Berk Şirket" });
+            customerManager.Delete(new Customer { CustomerId = 4 });
+        }
+
+        private static void UserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            var result = userManager.GetAll();
+            foreach (var user in result.Data)
+            {
+                Console.WriteLine(user.FirstName);
+            }
+            userManager.Add(new User { Id = 4, FirstName = "Berk", LastName = "Çolak", Email = "berk@mail.com", Password = "13245" });
+            userManager.Update(new User { Id = 5, FirstName = "Berk", LastName = "Çolak", Email = "berk@gmail.com", Password = "123" });
+            userManager.Delete(new User { Id = 4 });
         }
 
         private static void BrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var brand in brandManager.GetAll())
+            var result = brandManager.GetAll();
+            foreach (var brand in result.Data)
             {
                 Console.WriteLine(brand.BrandName);
             }
@@ -44,7 +91,8 @@ namespace ConsoleUI
         private static void ColorTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            foreach (var color in colorManager.GetAll())
+            var result = colorManager.GetAll();
+            foreach (var color in result.Data)
             {
                 Console.WriteLine(color.ColorName);
             }
@@ -61,7 +109,8 @@ namespace ConsoleUI
         private static void CarTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll())
+            var result = carManager.GetAll();
+            foreach (var car in result.Data)
             {
                 Console.WriteLine(car.CarName);
             }
